@@ -9,7 +9,12 @@
   flex-direction: column;
 }
 
-input {
+.label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.input {
   width: 92%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -21,7 +26,7 @@ input {
   font-size: 0.8rem;
 }
 
-.addButton {
+.button {
   background-color: #4caf50;
   color: white;
   padding: 10px 20px;
@@ -31,6 +36,6 @@ input {
   transition: background-color 0.3s ease;
 }
 
-.addButton:hover {
+button:hover {
   background-color: #45a049;
 }

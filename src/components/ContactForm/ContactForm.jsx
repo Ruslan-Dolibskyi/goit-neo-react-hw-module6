@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import styles from './ContactForm.module.css';
@@ -13,52 +15,46 @@ const validationSchema = Yup.object({
     .required('Required'),
 });
 
-const ContactForm = ({ onSubmit }) => {
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    onSubmit(values.name, values.number);
-    setSubmitting(false);
+const ContactForm = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(
+      addContact({
+        id: Date.now().toString(),
+        name: values.name,
+        number: values.number,
+      }),
+    );
     resetForm();
   };
 
   return (
-    <div>
-      <h2>Add contact</h2>
-      <Formik
-        initialValues={{ name: '', number: '' }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {formik => (
-          <Form className={styles.form}>
-            <div className={styles.field}>
-              <label htmlFor="name">Name</label>
-              <Field name="name" type="text" />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="number">Number</label>
-              <Field name="number" type="text" />
-              <ErrorMessage
-                name="number"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-            <button
-              type="submit"
-              className={styles.addButton}
-              disabled={formik.isSubmitting}
-            >
-              Add contact
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+    <Formik
+      initialValues={{ name: '', number: '' }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form className={styles.form}>
+        <label className={styles.label}>
+          Name
+          <Field className={styles.input} type="text" name="name" />
+          <ErrorMessage name="name" component="div" className={styles.error} />
+        </label>
+        <label className={styles.label}>
+          Number
+          <Field className={styles.input} type="tel" name="number" />
+          <ErrorMessage
+            name="number"
+            component="div"
+            className={styles.error}
+          />
+        </label>
+        <button type="submit" className={styles.button}>
+          Add contact
+        </button>
+      </Form>
+    </Formik>
   );
 };
 
