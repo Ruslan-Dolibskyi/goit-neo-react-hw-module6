@@ -1,5 +1,5 @@
 # React + Vite
-# HW 3 Книга контактів
+# HW 3 Книга контактів (update бібліотеки Redux Toolkit, замість локального React стану)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
